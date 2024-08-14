@@ -19,7 +19,7 @@ after clonning the repo , inside folder viola-jons-cpu do the followig
 
 # for traning new model
 
-1. download the data set from the followign link https://drive.google.com/uc?id=1z2kzc5W_LMz5ubrRzvvQh1rCV2cyBf-B
+1. download the data set from the followign link https://drive.google.com/uc?id=1z2kzc5W_LMz5ubrRzvvQh1rCV2cyBf-B , and extract it.
 2. download stb liberary by this command "git clone https://github.com/nothings/stb.git" and run this two commands to copy some files out of the folder " cp stb/stb_image.h ./ " and " cp stb/stb_image_write.h ./ "
 3. inside main.cpp make sure inside the main function , the mode must be TRAIN_FACE_DETECTION. make sure to have this line at the beggining of the main funciton : mode current_mode = TRAIN_FACE_DETECTION;
 4. in calling this fucntion train_face_detector("model", -1, 0.9, 0.9, 0.9, 0, 0); pass the name of the folder where you want to save the model in the first argument
