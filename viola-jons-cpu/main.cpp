@@ -227,10 +227,10 @@ void test_face_detector_threads(const char *folder, int num)
     delete[] predictions;
 }
 
-void process_local_frame(const char *file)
+void process_local_frame(const char *folder, const char *file)
 {
     FaceDetector classifier;
-    classifier.load("face1");
+    classifier.load(folder);
     int **II = new int *[24];
     for (int i = 0; i < 24; i++)
     {
@@ -261,7 +261,7 @@ void process_local_frame(const char *file)
         windows.push_back(faces[index]);
     }
     drawGreenRectangles(color_img, M, N, windows);
-    saveImageAsPNG("output/output.png", color_img, img, M, N, true);
+    saveImageAsPNG("output.png", color_img, img, M, N, true);
     for (int i = 0; i < M; i++)
     {
         delete[] img[i];
@@ -281,7 +281,7 @@ void process_local_frame(const char *file)
 int main()
 {
     fill_features_info();
-    mode current_mode = TEST_FACE_DETECTION;
+    mode current_mode = PROCESS_LOCAL_FRAME;
     if (current_mode == TRAIN_ADABOOST)
     {
         // train_ADA_BOOST("model2.txt", 10, 1000);
@@ -311,7 +311,7 @@ int main()
     }
     else if (current_mode == PROCESS_LOCAL_FRAME)
     {
-        process_local_frame("img7.jpg");
+        process_local_frame("model", "img2.jpg");
         return 0;
     }
 

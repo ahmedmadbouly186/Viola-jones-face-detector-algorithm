@@ -36,5 +36,5 @@ after clonning the repo , inside folder viola-jons-cpu do the followig
 
 - make step 1,2 and 3 as above in the train , but instead of TRAIN_FACE_DETECTION, make the mode current_mode = PROCESS_LOCAL_FRAME;
 
-4. in calling process_local_frame("img.jpg"); make sure to pass the imag wich you want to process in the first argument process_local_frame("img.jpg");
+4. in calling process_local_frame("model", "img.jpg"); make sure to pass the imag wich you want to process in the second argument process_local_frame("img.jpg");
 5. run command "run.bat" in terminal
