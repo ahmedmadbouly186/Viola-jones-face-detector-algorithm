@@ -296,14 +296,14 @@ int main()
     {
         // The targeted false positive and false negative rate for each layer
         // were set to 0.5 and 0.995
-        train_face_detector("model", 1000, 0.9, 0.9, 0.9, 0, 0);
+        train_face_detector("model", -1, 0.9, 0.9, 0.9, 0, 0);
         test_face_detector_threads("model", -1);
         return 0;
     }
     else if (current_mode == TEST_FACE_DETECTION)
     {
         auto start = std::chrono::high_resolution_clock::now();
-        test_face_detector_threads("model", 500);
+        test_face_detector_threads("model", -1);
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = end - start;
         std::cout << "Testing time: " << duration.count() << " s\n";

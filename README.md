@@ -1,99 +1,9 @@
 # Viola-jones-face-detector-algorithm
 
-# python implementation is the worst , it worser than worst c++ implementation without any optmizations
+This repo is an implementation for this prety paper : https://www.ipol.im/pub/art/2014/104/article.pdf
 
-# basic implemntation following the paper without any code optimization
-
-for 20 point
-training time is 1400 sec
-
-# before memory optimization with normal adaboost
-
-2000 point
-time for loading data is : 34.554 s
-Training classifier layer 1
-erorr in layer : 0 is : 0.194
-Training time: 173.963 s
-saving model to model2.txt
-Accuracy: 0.73875
-Error rate: 0.26125
-False positive rate: 0.055
-False negative rate: 0.4675
-
-# after memory optimization with normal adaboost
-
-2000 point
-time for loading data is : 22.2578 s
-Training classifier layer 1
-erorr in layer : 0 is : 0.194
-Classifier trained!
-Training time: 145.427 s
-saving model to model2.txt
-Accuracy: 0.73875
-Error rate: 0.26125
-False positive rate: 0.055
-False negative rate: 0.4675
-
-# face detector "viola-jones algorithm " without working with validation and without optimization memory
-
-2000 point
-total training set =2000
-memory usage 3.8 GB ram
-Yo=0.5 , Yl=0.5, Bl=0.5
-time for loading data is : 29.1783 s
-.... Training Face Detector ....
-erorr in layer : 0 is : 0.194
-layer 1 is trained
-false positive rate: 0.234
-false negative rate: 0.154
-Classifier trained!
-Training time: 182.046 s
-saving model to face1
-Accuracy: 0.747942
-Error rate: 0.252058
-False positive rate: 0.05
-False negative rate: 0.466102
-
-# face detector "viola-jones algorithm " without working with validation but with optmization
-
-2000 point
-Yo=0.5 , Yl=0.5, Bl=0.5
-memory 1.2GB
-time for loading data is : 10.5066 s
-.... Training Face Detector ....
-adaboost number : 1 layer number : 1 shift: 0 false positive rate : 0.234 false negative rate : 0.154
-layer 1 is trained
-false positive rate: 0.234
-false negative rate: 0.154
-Classifier trained!
-Training time: 90.4031 s
-saving model to face1
-Accuracy: 0.747942
-Error rate: 0.252058
-False positive rate: 0.05
-False negative rate: 0.466102
-
-for n=11K "full data"
-time : 660 sec
-memory 8GB
-
-# face detector "viola-jones algorithm " without working with validation but with optmization and multithreading
-
-2000 points
-training time 15 sec
-
-for n=11K "full data"
-time for loading data is : 44.7206 s
-.... Training Face Detector ....
-availabel threads : 12
-adaboost number : 1 layer number : 1 shift: 0 false positive rate : 0.164483 false negative rate : 0.0843969
-layer 1 is trained
-false positive rate: 0.164483
-false negative rate: 0.0843969
-Classifier trained!
-Training time: 132.839 s
-saving model to face1
-Accuracy: 0.897675
+- we made changes in the implementation to make memory and time optimizations in both the traning process and the final frame processing
+- our impelementation support parallization in CPU using multithread
 
 # definisions
 
@@ -103,131 +13,28 @@ Accuracy: 0.897675
 
 - Bl : desired targeted layer false negative , 1-Bl detection rate
 
-# with validation
+# How to run CPU version
 
-200 point
-Yo=0.2 Yl=0.5 Bl=0.2
-Training time: 155.917 s
-Accuracy: 0.867142
-False positive rate: 0.12104
-False negative rate: 0.622881
+after clonning the repo , inside folder viola-jons-cpu do the followig
 
-# FPR 0.72 FNR 0.12 -> using smaller dataset + 6 layers with equation 10\*n+10 , bl = 0.05
+# for traning new model
 
-# FPR 0.346 FNR 0.536 -> using smaller dataset + 6 layers with equation 10 , bl = 0.05 ==> better in frame processing
+1. download the data set from the followign link https://drive.google.com/uc?id=1z2kzc5W_LMz5ubrRzvvQh1rCV2cyBf-B
+2. download stb liberary by this command "git clone https://github.com/nothings/stb.git" and run this two commands to copy some files out of the folder " cp stb/stb_image.h ./ " and " cp stb/stb_image_write.h ./ "
+3. inside main.cpp make sure inside the main function , the mode must be TRAIN_FACE_DETECTION. make sure to have this line at the beggining of the main funciton : mode current_mode = TRAIN_FACE_DETECTION;
+4. in calling this fucntion train_face_detector("model", -1, 0.9, 0.9, 0.9, 0, 0); pass the name of the folder where you want to save the model in the first argument
+5. in terminal run command "run.bat" wich will call script i have wrote to compile the code and generate excutable and run the excutable
 
-# python implementation is the worst , it worser than worst c++ implementation without any optmizations
+# for test the model
 
-# basic implemntation following the paper without any code optimization
+- make step 1,2 and 3 as above in the train , but instead of TRAIN_FACE_DETECTION, make the mode current_mode = TEST_FACE_DETECTION;
 
-for 20 point
-training time is 1400 sec
+4. in calling test_face_detector_threads("model", -1); make sure to pass the name of the folder that contain your model in the first argument
+5. run command "run.bat" in terminal
 
-# before memory optimization with normal adaboost
+# for process image frame and extract the faces in the iamge
 
-2000 point
-time for loading data is : 34.554 s
-Training classifier layer 1
-erorr in layer : 0 is : 0.194
-Training time: 173.963 s
-saving model to model2.txt
-Accuracy: 0.73875
-Error rate: 0.26125
-False positive rate: 0.055
-False negative rate: 0.4675
+- make step 1,2 and 3 as above in the train , but instead of TRAIN_FACE_DETECTION, make the mode current_mode = PROCESS_LOCAL_FRAME;
 
-# after memory optimization with normal adaboost
-
-2000 point
-time for loading data is : 22.2578 s
-Training classifier layer 1
-erorr in layer : 0 is : 0.194
-Classifier trained!
-Training time: 145.427 s
-saving model to model2.txt
-Accuracy: 0.73875
-Error rate: 0.26125
-False positive rate: 0.055
-False negative rate: 0.4675
-
-# face detector "viola-jones algorithm " without working with validation and without optimization memory
-
-2000 point
-total training set =2000
-memory usage 3.8 GB ram
-Yo=0.5 , Yl=0.5, Bl=0.5
-time for loading data is : 29.1783 s
-.... Training Face Detector ....
-erorr in layer : 0 is : 0.194
-layer 1 is trained
-false positive rate: 0.234
-false negative rate: 0.154
-Classifier trained!
-Training time: 182.046 s
-saving model to face1
-Accuracy: 0.747942
-Error rate: 0.252058
-False positive rate: 0.05
-False negative rate: 0.466102
-
-# face detector "viola-jones algorithm " without working with validation but with optmization
-
-2000 point
-Yo=0.5 , Yl=0.5, Bl=0.5
-memory 1.2GB
-time for loading data is : 10.5066 s
-.... Training Face Detector ....
-adaboost number : 1 layer number : 1 shift: 0 false positive rate : 0.234 false negative rate : 0.154
-layer 1 is trained
-false positive rate: 0.234
-false negative rate: 0.154
-Classifier trained!
-Training time: 90.4031 s
-saving model to face1
-Accuracy: 0.747942
-Error rate: 0.252058
-False positive rate: 0.05
-False negative rate: 0.466102
-
-for n=11K "full data"
-time : 660 sec
-memory 8GB
-
-# face detector "viola-jones algorithm " without working with validation but with optmization and multithreading
-
-2000 points
-training time 15 sec
-
-for n=11K "full data"
-time for loading data is : 44.7206 s
-.... Training Face Detector ....
-availabel threads : 12
-adaboost number : 1 layer number : 1 shift: 0 false positive rate : 0.164483 false negative rate : 0.0843969
-layer 1 is trained
-false positive rate: 0.164483
-false negative rate: 0.0843969
-Classifier trained!
-Training time: 132.839 s
-saving model to face1
-Accuracy: 0.897675
-
-# definisions
-
-- Yo : desired overall false positive rate
-
-- Yl : desired targeted layer false positive
-
-- Bl : desired targeted layer false negative , 1-Bl detection rate
-
-# with validation
-
-200 point
-Yo=0.2 Yl=0.5 Bl=0.2
-Training time: 155.917 s
-Accuracy: 0.867142
-False positive rate: 0.12104
-False negative rate: 0.622881
-
-# FPR 0.72 FNR 0.12 -> using smaller dataset + 6 layers with equation 10\*n+10 , bl = 0.05
-
-# FPR 0.346 FNR 0.536 -> using smaller dataset + 6 layers with equation 10 , bl = 0.05 ==> better in frame processing
+4. in calling process_local_frame("img.jpg"); make sure to pass the imag wich you want to process in the first argument process_local_frame("img.jpg");
+5. run command "run.bat" in terminal
